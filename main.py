@@ -29,31 +29,34 @@ while not gameExit:
       gameExit = True
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_LEFT:
-        lead_x_change = -10
+        lead_x_change = -1
         lead_y_change = 0
       elif event.key == pygame.K_RIGHT:
-        lead_x_change = 10
+        lead_x_change = 1
         lead_y_change = 0
-
       elif event.key == pygame.K_UP:
         lead_x_change = 0
-        lead_y_change = -10
+        lead_y_change = -1
       elif event.key == pygame.K_DOWN:
         lead_x_change = 0
-        lead_y_change = 10
+        lead_y_change = 1
 
 #Click start
     elif event.type == pygame.MOUSEBUTTONDOWN:
-      mouse_pos = pygame.mouse.get_pos()
-      if mouse_pos[0] < lead_x:
-        lead_x -= 10
-      else:
-        lead_x += 10
-      if mouse_pos[0] < lead_y:
-        lead_y -= 10
-      else:
-        lead_y += 10
-#Click end        
+      mouse_posX, mouse_posY = pygame.mouse.get_pos()
+      if mouse_posX < lead_x and lead_x - mouse_posX > abs(lead_y - mouse_posY):
+        lead_x_change = -1
+        lead_y_change = 0
+      elif mouse_posX > lead_x and mouse_posX - lead_x > abs(lead_y - mouse_posY):
+        lead_x_change = 1
+        lead_y_change = 0
+      elif mouse_posY < lead_y and abs(lead_x - mouse_posX) < lead_y - mouse_posY:
+        lead_x_change = 0
+        lead_y_change = -1
+      elif mouse_posX > lead_x and abs(lead_x - mouse_posX) < mouse_posY - lead_y:
+        lead_x_change = 0
+        lead_y_change = 1
+#Click end  
 
   lead_x += lead_x_change
   lead_y += lead_y_change
